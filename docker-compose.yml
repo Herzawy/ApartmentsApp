@@ -1,0 +1,56 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=apartments
+    depends_on:
+      - db
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app 
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    restart: always
+  mobile:
+    build:
+      context: ./mobile
+    ports:
+      - "19000:19000"
+      - "19001:19001"
+    volumes:
+      - ./mobile:/app  
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: apartments
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+
+volumes:
+  db_data:
