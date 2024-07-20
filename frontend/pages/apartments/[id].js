@@ -13,8 +13,8 @@ export default function ApartmentDetails({ apartment }) {
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
-  const apartment = await find('apartments',id);
-
+  const response = await find('apartments', id);
+  const apartment = response.data;
   return {
     props: {
       apartment,

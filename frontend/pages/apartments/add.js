@@ -11,12 +11,14 @@ export default function AddApartment() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await create('apartments', {
+            const data = {
                 name,
                 location,
                 price: parseFloat(price),
-              });
-
+            };
+            console.log('Data to create:', data);
+            const response = await create('apartments', data);
+            
             if (response.status === 201) {
                 alert(`Apartment added successfully`);
                 router.push('/');
@@ -25,6 +27,7 @@ export default function AddApartment() {
             }
         } catch (error) {
             console.error('Error adding apartment:', error);
+            alert('Failed to add apartment');
         }
     };
 

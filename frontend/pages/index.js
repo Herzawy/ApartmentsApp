@@ -22,8 +22,8 @@ export default function Home({ apartments }) {
 }
 
 export async function getStaticProps() {
-  const apartments = await find('apartments');
-  console.log("apartments",apartments)
+  const response = await find('apartments');
+  const apartments = response.data;
   return {
     props: {
       apartments,

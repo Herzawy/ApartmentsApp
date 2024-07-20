@@ -1,32 +1,39 @@
 import axios from 'axios';
 
-const BASE_URL = "http://backend:5000";
-const BASE_URL_CREATE = "http://localhost:5000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL_BACKEND = process.env.NEXT_PUBLIC_API_URL_BACKEND;
 
 console.log('BASE_URL:', BASE_URL);
-export async function find(entity, id = null) {
+
+async function request(method, url, data = null, headers = {}) {
   try {
-    const url = id ? `${BASE_URL}/${entity}/${id}` : `${BASE_URL}/${entity}`;
-    const response = await axios.get(url);
-    return response.data;
+    const options = {
+      method,
+      url,
+      headers,
+      data,
+    };
+
+    const response = await axios(options);
+    return response;
   } catch (error) {
-    console.error(`Error finding ${entity}:`, error);
+    console.error(`Error with ${method} request to ${url}:`, error);
     throw error;
   }
+}
+
+export async function find(entity, id = null) {
+  const url = id ? `${BASE_URL}/${entity}/${id}` : `${BASE_URL}/${entity}`;
+  return await request('GET', url);
 }
 
 export async function create(entity, data) {
-    console.log("ASsasaasasa",data);
-  try {
-    const response = await axios.post(`${BASE_URL_CREATE}/${entity}`, data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    return response;
-  } catch (error) {
-    console.error(`Error creating ${entity}:`, error);
-    throw error;
-  }
+  const url = `${BASE_URL_BACKEND}/${entity}`;
+  const response = await request('POST', `${BASE_URL_BACKEND}/${entity}`, data, {
+    'Content-Type': 'application/json',
+  });
+  console.log('Create Response:', response);
+  return response;
 }
+
 // we can add other methods like update, delete.
