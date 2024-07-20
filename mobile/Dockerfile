@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN npm install expo-cli --save-dev
+RUN npm install -g expo-cli@6.3.10
 
 
 COPY . .
