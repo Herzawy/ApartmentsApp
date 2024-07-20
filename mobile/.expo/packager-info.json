@@ -1,4 +1,9 @@
 {
-  "expoServerPort": 19002,
-  "packagerPort": 19002
+  "expoServerPort": null,
+  "packagerPort": 19002,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://gv-z23.anonymous.mobile.exp.direct",
+  "packagerNgrokUrl": "https://gv-z23.anonymous.mobile.exp.direct",
+  "ngrokPid": 17792,
+  "webpackServerPort": null
 }
